@@ -21,8 +21,7 @@ public class Pacman extends MovingEntity implements Sujet {
         observerCollection = new ArrayList<>();
     }
 
-    //Gestion des déplacements
-    public void input(KeyHandler k) {
+    public void changeSpeed(int dx, int dy) {
         int new_xSpd = 0;
         int new_ySpd = 0;
 
@@ -30,17 +29,9 @@ public class Pacman extends MovingEntity implements Sujet {
         if (!onGameplayWindow()) return; //Pacman doit être dans la zone de jeu
 
         //Selon les touches appuyées, la direction de pacman change en conséquence
-        if (k.k_left.isPressed && xSpd >= 0 && !WallCollisionDetector.checkWallCollision(this, -spd, 0)) {
-            new_xSpd = -spd;
-        }
-        if (k.k_right.isPressed && xSpd <= 0 && !WallCollisionDetector.checkWallCollision(this, spd, 0)) {
-            new_xSpd = spd;
-        }
-        if (k.k_up.isPressed && ySpd >= 0 && !WallCollisionDetector.checkWallCollision(this, 0, -spd)) {
-            new_ySpd = -spd;
-        }
-        if (k.k_down.isPressed && ySpd <= 0 && !WallCollisionDetector.checkWallCollision(this, 0, spd)) {
-            new_ySpd = spd;
+        if ((-dx*xSpd>=0||-dy*ySpd>=0)&& !WallCollisionDetector.checkWallCollision(this, dx*spd, dy*spd)) {
+            new_xSpd = dx*spd;
+            new_ySpd = dy*spd;
         }
 
         if (new_xSpd == 0 && new_ySpd == 0) return;
@@ -59,6 +50,7 @@ public class Pacman extends MovingEntity implements Sujet {
                 ySpd = 0;
             }
         }
+
     }
 
     @Override

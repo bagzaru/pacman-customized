@@ -114,11 +114,6 @@ public class Game implements Observer {
         }
     }
 
-    //Gestion des inputs
-    public void input(KeyHandler k) {
-        pacman.input(k);
-    }
-
     //Rendu de toutes les entités
     public void render(Graphics2D g) {
         for (Entity o: objects) {

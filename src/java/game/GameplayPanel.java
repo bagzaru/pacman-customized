@@ -63,7 +63,8 @@ public class GameplayPanel extends JPanel implements Runnable {
 
     //gestion des inputs
     public void input(KeyHandler key) {
-        game.input(key);
+        //모든 키에 대한 Action 실행으로 변경
+        key.doPressedKeyAction();
     }
 
     //"rendu du jeu" ; on prépare ce qui va être affiché en dessinant sur une "image" : un fond et les entités du jeu au dessus
