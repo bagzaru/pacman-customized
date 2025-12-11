@@ -9,6 +9,7 @@ import game.ghostStates.FrightenedMode;
 import game.utils.CollisionDetector;
 import game.utils.CsvReader;
 import game.utils.KeyHandler;
+import game.utils.ResourceFacade;
 
 import java.awt.*;
 import java.net.URISyntaxException;
@@ -32,8 +33,9 @@ public class Game implements Observer {
 
         //Chargement du fichier csv du niveau
         List<List<String>> data = null;
+        ResourceFacade resourceFacade = ResourceFacade.getInstance();
         try {
-            data = new CsvReader().parseCsv(getClass().getClassLoader().getResource("level/level.csv").toURI());
+            data = resourceFacade.parseCSV("level/level.csv");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

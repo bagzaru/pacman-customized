@@ -1,6 +1,7 @@
 package game;
 
 import game.utils.KeyHandler;
+import game.utils.ResourceFacade;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,7 +30,9 @@ public class GameplayPanel extends JPanel implements Runnable {
         setPreferredSize(new Dimension(width, height));
         setFocusable(true);
         requestFocus();
-        backgroundImage = ImageIO.read(getClass().getClassLoader().getResource("img/background.png"));
+
+        ResourceFacade resourceFacade = ResourceFacade.getInstance();
+        backgroundImage = resourceFacade.getImage("img/background.png");
     }
 
     @Override
