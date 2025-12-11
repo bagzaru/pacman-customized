@@ -144,6 +144,7 @@ public class Game implements Observer {
     }
 
     public static void gameOver() {
+        GameLauncher.getUIPanel().updateSavedScores();
         System.out.println("Game over !\nScore : " + GameLauncher.getUIPanel().getScore());
         System.exit(0);
     }
