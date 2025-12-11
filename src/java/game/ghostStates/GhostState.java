@@ -115,6 +115,10 @@ public abstract class GhostState {
         return 0;
     }
 
+    public int getScore() {
+        return 0;
+    }
+
     public void onPacmanCollision() {
         Game.gameOver();
     }
