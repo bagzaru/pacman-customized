@@ -1,5 +1,8 @@
 package game.ghostStates;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import game.entities.ghosts.Ghost;
 import game.utils.Utils;
 import game.utils.WallCollisionDetector;
@@ -13,7 +16,7 @@ public class EatenMode extends GhostState{
     //Transition lorsque le fantôme retourne dans sa maison
     @Override
     public void insideHouse() {
-        ghost.switchHouseMode();
+        ghost.setState(ghost.getHouseMode());
     }
 
     //Dans cet état, la position ciblée est une case au milieu de la maison des fantômes
@@ -83,5 +86,17 @@ public class EatenMode extends GhostState{
                 ghost.setySpd(0);
             }
         }
+    }
+
+    @Override
+    public void onPacmanCollision() {}
+
+    @Override
+    public void render(Graphics2D g, BufferedImage sprite, BufferedImage frightenedSprite1, BufferedImage frightenedSprite2, BufferedImage eatenSprite) {
+        int direction = ghost.getDirection();
+        int size = ghost.getSize();
+        int xPos = ghost.getxPos();
+        int yPos = ghost.getyPos();
+        g.drawImage(eatenSprite.getSubimage(direction * size, 0, size, size), xPos, yPos,null);
     }
 }

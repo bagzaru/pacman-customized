@@ -11,13 +11,19 @@ public class ScatterMode extends GhostState{
     //Transition lorsqu'une SuperPacGum est mangée
     @Override
     public void superPacGumEaten() {
-        ghost.switchFrightenedMode();
+        ghost.setState(ghost.getFrightenedMode());
     }
 
     //Transition lorsque le timer de l'état courant est terminé (il alterne entre ChaseMode et ScatterMode)
     @Override
     public void timerModeOver() {
-        ghost.switchChaseMode();
+        isChasing = true;
+        ghost.setState(ghost.getChaseMode());
+    }
+
+    @Override
+    public int getTimerThreshold() {
+        return 60 * 5;
     }
 
     //Dans cet état, la position ciblée dépend de la stratégie du fantôme

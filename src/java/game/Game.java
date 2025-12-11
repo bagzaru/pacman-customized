@@ -147,12 +147,12 @@ public class Game implements Observer {
 
     @Override
     public void updateGhostCollision(Ghost gh) {
-        if (gh.getState() instanceof FrightenedMode) {
-            gh.getState().eaten(); //S'il existe une transition particulière quand le fantôme est mangé, son état change en conséquence
-        }else if (!(gh.getState() instanceof EatenMode)) {
-            System.out.println("Game over !\nScore : " + GameLauncher.getUIPanel().getScore()); //Quand Pacman rentre en contact avec un Fantôme qui n'est ni effrayé, ni mangé, c'est game over !
-            System.exit(0); //TODO
-        }
+        gh.onPacmanCollision();
+    }
+
+    public static void gameOver() {
+        System.out.println("Game over !\nScore : " + GameLauncher.getUIPanel().getScore());
+        System.exit(0);
     }
 
     public static void setFirstInput(boolean b) {

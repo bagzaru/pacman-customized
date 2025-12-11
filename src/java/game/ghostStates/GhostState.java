@@ -1,5 +1,9 @@
 package game.ghostStates;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import game.Game;
 import game.entities.ghosts.Ghost;
 import game.utils.Utils;
 import game.utils.WallCollisionDetector;
@@ -7,6 +11,8 @@ import game.utils.WallCollisionDetector;
 //Classe abstrate pour décrire les différents états de fantômes
 public abstract class GhostState {
     protected Ghost ghost;
+    protected int timer = 0;
+    protected boolean isChasing = false;
 
     public GhostState(Ghost ghost) {
         this.ghost = ghost;
@@ -15,7 +21,6 @@ public abstract class GhostState {
     //Différentes transitions possibles d'un état vers un autre
     public void superPacGumEaten() {}
     public void timerModeOver() {}
-    public void timerFrightenedModeOver() {}
     public void eaten() {}
     public void outsideHouse() {}
     public void insideHouse() {}
@@ -92,5 +97,35 @@ public abstract class GhostState {
                 ghost.setySpd(0);
             }
         }
+    }
+
+    public void addTimer(int t) {
+        this.timer = this.timer + t;
+    }
+
+    public void resetTimer() {
+        this.timer = 0;
+    }
+
+    public int getTimer() {
+        return this.timer;
+    }
+
+    public int getTimerThreshold() {
+        return 0;
+    }
+
+    public void onPacmanCollision() {
+        Game.gameOver();
+    }
+
+    public void render(Graphics2D g, BufferedImage sprite, BufferedImage frightenedSprite1, BufferedImage frightenedSprite2, BufferedImage eatenSprite) {
+        int size = ghost.getSize();
+        int xPos = ghost.getxPos();
+        int yPos = ghost.getyPos();
+        int subimage = (int)ghost.getSubimage();
+        int direction = ghost.getDirection();
+        int nbSubimagesPerCycle = ghost.getNbSubimagesPerCycle();
+        g.drawImage(sprite.getSubimage(subimage * size + direction * size * nbSubimagesPerCycle, 0, size, size), xPos, yPos,null);
     }
 }

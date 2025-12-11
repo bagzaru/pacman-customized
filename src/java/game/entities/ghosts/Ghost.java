@@ -20,10 +20,6 @@ public abstract class Ghost extends MovingEntity {
     protected final GhostState eatenMode;
     protected final GhostState houseMode;
 
-    protected int modeTimer = 0;
-    protected int frightenedTimer = 0;
-    protected boolean isChasing = false;
-
     protected static BufferedImage frightenedSprite1;
     protected static BufferedImage frightenedSprite2;
     protected static BufferedImage eatenSprite;
@@ -52,32 +48,29 @@ public abstract class Ghost extends MovingEntity {
     }
 
     //Méthodes pour les transitions entre les différents états
-    public void switchChaseMode() {
-        state = chaseMode;
-    }
-    public void switchScatterMode() {
-        state = scatterMode;
+    public void setState(GhostState state) {
+        state.resetTimer();
+        this.state = state;
     }
 
-    public void switchFrightenedMode() {
-        frightenedTimer = 0;
-        state = frightenedMode;
+    public GhostState getChaseMode() {
+        return chaseMode;
     }
 
-    public void switchEatenMode() {
-        state = eatenMode;
+    public GhostState getScatterMode() {
+        return scatterMode;
     }
 
-    public void switchHouseMode() {
-        state = houseMode;
+    public GhostState getFrightenedMode() {
+        return frightenedMode;
     }
 
-    public void switchChaseModeOrScatterMode() {
-        if (isChasing) {
-            switchChaseMode();
-        }else{
-            switchScatterMode();
-        }
+    public GhostState getEatenMode() {
+        return eatenMode;
+    }
+
+    public GhostState getHouseMode() {
+        return houseMode;
     }
 
     public IGhostStrategy getStrategy() {
@@ -92,28 +85,17 @@ public abstract class Ghost extends MovingEntity {
         return state;
     }
 
+    public void onPacmanCollision() {
+        state.onPacmanCollision();
+    }
+
     @Override
     public void update() {
         if (!Game.getFirstInput()) return; //Les fantômes ne bougent pas tant que le joueur n'a pas bougé
 
-        //Si le fantôme est dans l'état effrayé, un timer de 7s se lance, et l'état sera notifié ensuite afin d'appliquer la transition adéquate
-        if (state == frightenedMode) {
-            frightenedTimer++;
-
-            if (frightenedTimer >= (60 * 7)) {
-                state.timerFrightenedModeOver();
-            }
-        }
-
-        //Les fantômes alternent entre l'état chaseMode et scatterMode avec un timer
-        //Si le fantôme est dans l'état chaseMode ou scatterMode, un timer se lance, et au bout de 5s ou 20s selon l'état, l'état est notifié ensuite afin d'appliquer la transition adéquate
-        if (state == chaseMode || state == scatterMode) {
-            modeTimer++;
-
-            if ((isChasing && modeTimer >= (60 * 20)) || (!isChasing && modeTimer >= (60 * 5))) {
-                state.timerModeOver();
-                isChasing = !isChasing;
-            }
+        state.addTimer(1);
+        if (state.getTimer() >= state.getTimerThreshold()) {
+            state.timerModeOver();
         }
 
         //Si le fantôme est sur la case juste au dessus de sa maison, l'état est notifié afin d'appliquer la transition adéquate
@@ -133,18 +115,6 @@ public abstract class Ghost extends MovingEntity {
 
     @Override
     public void render(Graphics2D g) {
-        //Différents sprites sont utilisés selon l'état du fantôme (après réflexion, il aurait peut être été plus judicieux de faire une méthode "render" dans GhostState)
-        if (state == frightenedMode) {
-            if (frightenedTimer <= (60 * 5) || frightenedTimer%20 > 10) {
-                g.drawImage(frightenedSprite1.getSubimage((int)subimage * size, 0, size, size), this.xPos, this.yPos,null);
-            }else{
-                g.drawImage(frightenedSprite2.getSubimage((int)subimage * size, 0, size, size), this.xPos, this.yPos,null);
-            }
-        }else if (state == eatenMode) {
-            g.drawImage(eatenSprite.getSubimage(direction * size, 0, size, size), this.xPos, this.yPos,null);
-        }else{
-            g.drawImage(sprite.getSubimage((int)subimage * size + direction * size * nbSubimagesPerCycle, 0, size, size), this.xPos, this.yPos,null);
-        }
-
+        state.render(g, sprite, frightenedSprite1, frightenedSprite2, eatenSprite);
     }
 }

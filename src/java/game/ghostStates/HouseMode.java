@@ -13,7 +13,7 @@ public class HouseMode extends GhostState{
     //Transition lorsque le fantôme est hors de sa maison
     @Override
     public void outsideHouse() {
-        this.ghost.switchChaseModeOrScatterMode();
+        ghost.setState(isChasing ? ghost.getChaseMode() : ghost.getScatterMode());
     }
 
     //Dans cet état, la position ciblée est la case juste au dessus de la maison des fantômes
