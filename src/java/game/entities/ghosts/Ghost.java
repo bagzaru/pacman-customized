@@ -4,6 +4,7 @@ import game.Game;
 import game.entities.MovingEntity;
 import game.ghostStates.*;
 import game.ghostStrategies.IGhostStrategy;
+import game.utils.ResourceFacade;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -39,9 +40,10 @@ public abstract class Ghost extends MovingEntity {
         state = houseMode; //état initial
 
         try {
-            frightenedSprite1 = ImageIO.read(getClass().getClassLoader().getResource("img/ghost_frightened.png"));
-            frightenedSprite2 = ImageIO.read(getClass().getClassLoader().getResource("img/ghost_frightened_2.png"));
-            eatenSprite = ImageIO.read(getClass().getClassLoader().getResource("img/ghost_eaten.png"));
+            ResourceFacade resourceFacade = ResourceFacade.getInstance();
+            frightenedSprite1 = resourceFacade.getImage("img/ghost_frightened.png");
+            frightenedSprite2 = resourceFacade.getImage("img/ghost_frightened_2.png");
+            eatenSprite = resourceFacade.getImage("img/ghost_eaten.png");
         } catch (IOException e) {
             e.printStackTrace();
         }

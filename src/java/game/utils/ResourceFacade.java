@@ -2,6 +2,7 @@ package game.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,7 +40,7 @@ public class ResourceFacade {
         return getResource(path).toURI();
     }
 
-    public Image getImage(String path) throws IOException {
+    public BufferedImage getImage(String path) throws IOException {
         URL url = getResource(path);
         return ImageIO.read(url);
     }

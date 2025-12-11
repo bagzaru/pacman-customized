@@ -1,6 +1,8 @@
 package game.entities;
 
 import game.GameplayPanel;
+import game.utils.ResourceFacade;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -21,7 +23,8 @@ public abstract class MovingEntity extends Entity {
         super(size, xPos, yPos);
         this.spd = spd;
         try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("img/" + spriteName));
+            ResourceFacade resourceFacade = ResourceFacade.getInstance();
+            this.sprite = resourceFacade.getImage("img/" + spriteName);
             this.nbSubimagesPerCycle = nbSubimagesPerCycle;
             this.imageSpd = imageSpd;
         } catch (IOException e) {
@@ -105,7 +108,8 @@ public abstract class MovingEntity extends Entity {
 
     public void setSprite(String spriteName) {
         try {
-            this.sprite = ImageIO.read(getClass().getClassLoader().getResource("img/" + spriteName));
+            ResourceFacade resourceFacade = ResourceFacade.getInstance();
+            this.sprite = resourceFacade.getImage("img/" + spriteName);
         } catch (IOException e) {
             e.printStackTrace();
         }
