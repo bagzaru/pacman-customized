@@ -18,6 +18,7 @@ public class ChaseMode extends GhostState{
     //Transition lorsque le timer de l'état courant est terminé (il alterne entre ChaseMode et ScatterMode)
     @Override
     public void timerModeOver() {
+        isChasing = false;
         ghost.setState(ghost.getScatterMode());
     }
 

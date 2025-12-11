@@ -5,7 +5,6 @@ import game.Observer;
 import game.Sujet;
 import game.entities.ghosts.Ghost;
 import game.utils.CollisionDetector;
-import game.utils.KeyHandler;
 import game.utils.WallCollisionDetector;
 
 import java.util.ArrayList;

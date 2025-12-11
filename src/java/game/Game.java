@@ -4,11 +4,7 @@ import game.entities.*;
 import game.entities.ghosts.Blinky;
 import game.entities.ghosts.Ghost;
 import game.ghostFactory.*;
-import game.ghostStates.EatenMode;
-import game.ghostStates.FrightenedMode;
 import game.utils.CollisionDetector;
-import game.utils.CsvReader;
-import game.utils.KeyHandler;
 import game.utils.ResourceFacade;
 
 import java.awt.*;

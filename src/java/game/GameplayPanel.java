@@ -3,7 +3,6 @@ package game;
 import game.utils.KeyHandler;
 import game.utils.ResourceFacade;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
