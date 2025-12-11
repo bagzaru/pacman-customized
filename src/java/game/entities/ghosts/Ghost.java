@@ -147,4 +147,12 @@ public abstract class Ghost extends MovingEntity {
         }
 
     }
+
+    public void eaten() {
+        state.eaten();
+    }
+
+    public void superPacGumEaten() {
+        state.superPacGumEaten();
+    }
 }
