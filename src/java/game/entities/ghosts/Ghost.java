@@ -87,8 +87,20 @@ public abstract class Ghost extends MovingEntity {
         return state;
     }
 
+    public void eaten() {
+        state.eaten();
+    }
+
+    public void superPacGumEaten() {
+        state.superPacGumEaten();
+    }
+
     public void onPacmanCollision() {
         state.onPacmanCollision();
+    }
+
+    public int getScore() {
+        return state.getScore();
     }
 
     @Override
@@ -118,14 +130,6 @@ public abstract class Ghost extends MovingEntity {
     @Override
     public void render(Graphics2D g) {
         state.render(g, sprite, frightenedSprite1, frightenedSprite2, eatenSprite);
-    }
-
-    public void eaten() {
-        state.eaten();
-    }
-
-    public void superPacGumEaten() {
-        state.superPacGumEaten();
     }
 
     public int[] getScatterTargetPosition(){

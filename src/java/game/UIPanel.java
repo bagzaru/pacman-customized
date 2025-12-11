@@ -88,9 +88,7 @@ public class UIPanel extends JPanel implements Observer {
 
     @Override
     public void updateGhostCollision(Ghost gh) {
-        if (gh.getState() instanceof FrightenedMode) { //Dans le cas où Pacman est en contact avec un fantôme on ne met à jour le score que lorsque ce dernier est en mode "frightened"
-            updateScore(500);
-        }
+        updateScore(gh.getScore());
     }
 
     public void updateSavedScores(){

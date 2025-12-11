@@ -46,6 +46,11 @@ public class FrightenedMode extends GhostState{
     }
 
     @Override
+    public int getScore() {
+        return 500;
+    }
+
+    @Override
     public void render(Graphics2D g, BufferedImage sprite, BufferedImage frightenedSprite1, BufferedImage frightenedSprite2, BufferedImage eatenSprite) {
         int size = ghost.getSize();
         int xPos = ghost.getxPos();
