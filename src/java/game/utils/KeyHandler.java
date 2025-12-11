@@ -1,6 +1,9 @@
 package game.utils;
 
+import game.Game;
 import game.GameplayPanel;
+import game.entities.Pacman;
+import game.utils.keys.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,41 +15,28 @@ public class KeyHandler implements KeyListener {
 
     public static List<Key> keys = new ArrayList<>();
 
-    public class Key {
-        public boolean isPressed;
+    public KeyHandler(GameplayPanel game) {
+        game.addKeyListener(this);
 
-        public Key() {
-            keys.add(this);
-        }
+        keys.add(new LeftKey());
+        keys.add(new RightKey());
+        keys.add(new UpKey());
+        keys.add(new DownKey());
+    }
 
-        public void toggle(boolean pressed) {
-            if (pressed != isPressed) {
-                isPressed = pressed;
+    public void toggle(KeyEvent e, boolean pressed) {
+        for(Key k : keys){
+            if(k.validateKeyCode(e)){
+                k.toggle(pressed);
             }
         }
     }
 
-    public Key k_up = new Key();
-    public Key k_down = new Key();
-    public Key k_left = new Key();
-    public Key k_right = new Key();
-
-    public KeyHandler(GameplayPanel game) {
-        game.addKeyListener(this);
-    }
-
-    public void toggle(KeyEvent e, boolean pressed) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_Q) {
-            k_left.toggle(pressed);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-            k_right.toggle(pressed);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_Z) {
-            k_up.toggle(pressed);
-        }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-            k_down.toggle(pressed);
+    public void doPressedKeyAction(){
+        for(Key k : keys){
+            if(k.isPressed){
+                k.performKeyBehavior();
+            }
         }
     }
 

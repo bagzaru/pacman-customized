@@ -9,6 +9,7 @@ import game.ghostStates.FrightenedMode;
 import game.utils.CollisionDetector;
 import game.utils.CsvReader;
 import game.utils.KeyHandler;
+import game.utils.ResourceFacade;
 
 import java.awt.*;
 import java.net.URISyntaxException;
@@ -32,8 +33,9 @@ public class Game implements Observer {
 
         //Chargement du fichier csv du niveau
         List<List<String>> data = null;
+        ResourceFacade resourceFacade = ResourceFacade.getInstance();
         try {
-            data = new CsvReader().parseCsv(getClass().getClassLoader().getResource("level/level.csv").toURI());
+            data = resourceFacade.parseCSV("level/level.csv");
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -112,11 +114,6 @@ public class Game implements Observer {
         }
     }
 
-    //Gestion des inputs
-    public void input(KeyHandler k) {
-        pacman.input(k);
-    }
-
     //Rendu de toutes les entités
     public void render(Graphics2D g) {
         for (Entity o: objects) {
@@ -141,7 +138,7 @@ public class Game implements Observer {
     public void updateSuperPacGumEaten(SuperPacGum spg) {
         spg.destroy(); //La SuperPacGum est détruite quand Pacman la mange
         for (Ghost gh : ghosts) {
-            gh.getState().superPacGumEaten(); //S'il existe une transition particulière quand une SuperPacGum est mangée, l'état des fantômes change
+            gh.superPacGumEaten(); //S'il existe une transition particulière quand une SuperPacGum est mangée, l'état des fantômes change
         }
     }
 
