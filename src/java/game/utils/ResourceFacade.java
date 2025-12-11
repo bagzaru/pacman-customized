@@ -1,4 +1,4 @@
-﻿package game.utils;
+package game.utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -20,9 +20,9 @@ public class ResourceFacade {
     }
 
     public static ResourceFacade getInstance(){
-        if (instance == null) { // 1차 체크 (성능 최적화)
+        if (instance == null) {
             synchronized (ResourceFacade.class) {
-                if (instance == null) { // 2차 체크 (스레드 안전)
+                if (instance == null) {
                     instance = new ResourceFacade();
                 }
             }
