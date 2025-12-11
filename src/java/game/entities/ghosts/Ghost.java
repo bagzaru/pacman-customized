@@ -155,4 +155,12 @@ public abstract class Ghost extends MovingEntity {
     public void superPacGumEaten() {
         state.superPacGumEaten();
     }
+
+    public int[] getScatterTargetPosition(){
+        return strategy.getScatterTargetPosition();
+    }
+
+    public int[] getChaseTargetPosition(){
+        return strategy.getChaseTargetPosition();
+    }
 }

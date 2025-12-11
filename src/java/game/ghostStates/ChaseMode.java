@@ -23,6 +23,6 @@ public class ChaseMode extends GhostState{
     //Dans cet état, la position ciblée dépend de la stratégie du fantôme
     @Override
     public int[] getTargetPosition() {
-        return ghost.getStrategy().getChaseTargetPosition();
+        return ghost.getChaseTargetPosition();
     }
 }
